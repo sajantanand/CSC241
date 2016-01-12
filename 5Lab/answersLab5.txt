@@ -1,0 +1,4 @@
+Sajant Anand
+CSC-241 - Lab 5 Questions
+
+1. The critical sections of the problem include any uses of shared memory and the read, squash, and print processes. The read, squash, and print processes are critical sections because these programs can only operate one instance of each at a time; as a result, the read, squash, and print processess can only run when they have access to particualr shared memory buffers ( provided by semaphore). Other critical sections include the code sections that access and modify shared memory character buffers ( used to transfer characters between the processess ). Each of these shared memory segments are guarded by semaphores so that only one process ( read, print, squash )can access or modify these shared variables at a time.

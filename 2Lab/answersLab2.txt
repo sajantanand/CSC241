@@ -1,0 +1,24 @@
+NAME: Sajant Anand
+CSC-241 - Lab 2 Questions
+
+1. The maximum number of processor supported by my unix system is 32768. I found this number by looking in the pid_max file found in the /proc/sys/kernel/ directory.
+
+2. A circular, doubly linked list is used to implement the PCB. The "first" item in the list is the init.
+
+3. The sleep(SECONDS) system call makes the calling thread (and therefore the process for a unithreaded process) be suspended from execution  until the specified number of seconds (SECONDS) have elapsed or a signal arrives which is not ignored. This call results in the calling process being moved to the blocked queue, and the time before execution of this process restarts may be longer than the time specified due to the scheduling of other processes by the OS.
+
+4. If I insert the code "sleep(2);" before the read instruction in the child process, the parent process will execute (read lines) until its alloted time expires, while the child process will not enter the ready queue until at least 2 seconds have elapsed (after the fork when the sleep(2) command is executed, the child process will be moved to the blocked queue). The result of this is that the parent process will read all 4000 lines of my input file before the child process is executed, so there are no lines for the child to read.
+
+5.In this case, the child process will read all 4000 lines before the parent process has a chance to be executed. The reason for this is the same as above: the parent process will be moved to the blocked queue when the sleep(2) command is executed and can only move to the ready queue after two seconds. By this time, the child will have read as many lines as possible before its own alloted time runs out (its time is alloted by the scheduler). Thus when the parent is executed (after moving to ready queue), it will begin reading lines where the child left off. In my case with a test file of 4000 lines, the child will read all the lines before the parent is executed.
+
+6. $./timing
+   hello world
+   hello hello world
+   $
+
+	The first "hello " is entered into the buffer  before the fork() happens. After the fork() call, the parent (pid != 0) prints a "world\n" on the same line as the first hello (the newline character forces stdout to flush, so the first "hello " is printed when "world\n" is), and then the child prints a "hello world\n" on the next line (when the fork call occurs, the child process has a copy of the parent's buffer. The parent's buffer contains a "hello " that has not been printed yet, so the new line character in the child's printf statement flushes the buffer, printing both the original "hello " added by the parent before the fork and the "hello world\n" added by the child). This happens because the fork call returns the pid of the child to the parent first (allowing the "world\n" to be printed) and after this returns a pid of 0 to the child (allowing the "hello world\n" on the next line to be printed).
+
+7. W()* macros can be used to analyze the status of the terminated process. If a process terminates normally, WIFEXITED(status) returns true and WEXITSTATUS(status) returns the exit status of the child (least significant 8 bits of the status arguement). If a process is terminated by signal, WTERMSIG(status) returns the number of the signal that caused the child process to terminate and WCOREDUMP(status) returns true if the child produced a core dump (WCOREDUMP isn't available on all UNIX implementations).
+
+	If the child process terminated normally, the low-order byte (4th byte) will be 0 and the high orger byte (3rd byte)  will contain the exit code(0-255). 
+	If the child process terminated due to an uncaught signal, the low-oder byte (4th byte) will contain the signal number and the high-order byte (3rd byte) will be 0.

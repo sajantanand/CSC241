@@ -1,0 +1,6 @@
+NAME: Sajant Anand
+CSC-241 - Lab 1 Questions
+
+1. The fundamental difference between signal() and sigaction() system calls is that the signal() call resets the signal handler to the default (SIGDFL) after receiving the signal, while the sigaction() call does not reset the default action of the signal handler but instead blocks new instances of the signal from occurring during the call of the handler. This becomes important when the signal handler is catching a signal that would typically result in the termination of the program, as repeated signals after the first would be handled in the default manner (if the signal() call was used).
+
+2. The purpose of the SIGKILL signal is to provide the OS a foolproof method of terminating a process; as SIGKILL can't be caught or intercepted, the OS always has a way of ending processes, even if they are catching signals such as SIGINT.

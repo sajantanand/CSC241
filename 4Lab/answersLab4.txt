@@ -1,0 +1,6 @@
+Sajant Anand
+CSC-241 - Lab 4 Questions
+
+1. The critical sections of the problem include any uses of shared memory and the barber and cashier processes. The barber and cashier processes are critical sections because these programs can only operate on one customer process at a time; as a result, the barber and cashier processes are guarded by semaphores. Other critical sections include the code sections that access and modify shared memory character pointers, cutsCH, chairsCH, and countCH. Each of these shared memory segments are guarded by semaphores so that only one process can access or modify these shared variables at a time.
+
+2. To hire another barber, there would have to be a second barber process. This can be accomplished by using a fork() system call right before the infinite while loop that handles the barber. Since the barber is awoken by a V call in the customer processes, each barber will be able to provide a hair cut independently of the other. 

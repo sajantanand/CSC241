@@ -1,0 +1,8 @@
+Sajant Anand
+CSC-241 - Lab 3 Questions
+
+1.  The exec() functions only return if an error has occurred. The return value is -1, and "errno" is set to indicate the error.
+
+    Both the wait() and waitpid() system calls also take "int * stat_loc" as an arguement, and in this variable, the value returned by the terminating process ( i.e. exit ( x ); ) is stored. Thus, the shell can use the value of this variable after the command terminates to determine if the command was successful or not.
+
+2. If the exec() call fails, it returns to the calling function. This is why we use the command perror() after the exec call so that if the exec() call fails, we print the error message to the screen. One possible reason for the exec() call to fail is that the desired executible does not exist.
